@@ -12,5 +12,9 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 # RUN pecl install intl \
 #     && docker-php-ext-enable intl
 COPY pimcore-install /pimcore-install
-RUN chown -R www-data:www-data web/var var pimcore app/config \
-    && chown -R www-data:www-data /pimcore-install/app /pimcore-install/src /pimcore-install/web
+RUN chown -R www-data:www-data \
+    /pimcore-install/web/var \
+    /pimcore-install/var \
+    /pimcore-install/pimcore \
+    /pimcore-install/app \
+    /pimcore-install/src

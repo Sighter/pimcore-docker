@@ -1,7 +1,7 @@
 <?php
 $servername = "pimcore-mariadb";
 $username = "root";
-$password = "test";
+$password = "testing";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
