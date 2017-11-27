@@ -11,7 +11,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 # RUN pecl install intl \
 #     && docker-php-ext-enable intl
 COPY pimcore-install /pimcore-install
-COPY pimcore-install-substitutions/app/AppKernel.php /pimcore-install-substitutions/app/AppKernel.php
+COPY pimcore-install-substitutions/ /pimcore-install-substitutions/
 COPY pimcore-install-substitutions/composer.json /pimcore-install/composer.json
 
 RUN chown -R www-data:www-data \
@@ -27,12 +27,13 @@ CMD cd /pimcore-install \
   --mysql-username root --mysql-password testing --mysql-database pimcoredb \
   --mysql-host-socket pimcore-mariadb \
   --no-interaction" \
-  && composer require coreshop/money-bundle:^2.0 \
+  && composer require coreshop/core-shop dev-master \
   && chown -R www-data:www-data var \
   && su www-data -s /bin/bash -c \
-  "cp /pimcore-install-substitutions/app/AppKernel.php /pimcore-install/app/AppKernel.php" \
-  && bin/console assets:install --symlink \
+  "cp /pimcore-install-substitutions/app/AppKernel.php /pimcore-install/app/AppKernel.php \
+   && cp /pimcore-install-substitutions/app/config/config.yml /pimcore-install/app/config/config.yml" \
+  && php bin/console coreshop:install \
+  #&& bin/console assets:install --symlink \
   # && su www-data -s /bin/bash -c \
-  # "php bin/console coreshop:install" \
   && apache2-foreground
 

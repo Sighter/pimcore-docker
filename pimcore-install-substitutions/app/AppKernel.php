@@ -32,15 +32,6 @@ class AppKernel extends Kernel
             $collection->addBundle(new \Pimcore\Bundle\LegacyBundle\PimcoreLegacyBundle);
         }
 
-        $collection->addBundles([
-            new \JMS\SerializerBundle\JMSSerializerBundle(),
-
-            new \CoreShop\Bundle\MoneyBundle\CoreShopMoneyBundle(),
-            new \CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle(),
-
-            new \FOS\RestBundle\FOSRestBundle(),
-            new \Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
-            new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-        ]);
+        \CoreShop\Bundle\CoreBundle\Application\RegisterBundleHelper::registerBundles($collection);
     }
 }
