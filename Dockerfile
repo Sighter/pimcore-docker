@@ -1,5 +1,4 @@
 FROM chialab/php:7.1-apache
-#COPY php.ini /usr/local/etc/php/
 COPY index.php /var/www/html/
 RUN docker-php-ext-install exif
 
@@ -19,14 +18,14 @@ RUN chown -R www-data:www-data \
     /pimcore-install/app \
     /pimcore-install/src
 CMD cd /pimcore-install \
-  && composer require coreshop/core-shop dev-master --no-scripts \
+  # && composer require coreshop/core-shop dev-master --no-scripts \
   && su www-data -s /bin/bash -c \
   "bin/install --profile empty \
   --admin-username admin --admin-password admin \
   --mysql-username root --mysql-password testing --mysql-database pimcoredb \
   --mysql-host-socket pimcore-mariadb \
   --no-interaction" \
-  && su www-data -s /bin/bash -c \
-  "php bin/console coreshop:install" \
+  # && su www-data -s /bin/bash -c \
+  # "php bin/console coreshop:install" \
   && apache2-foreground
 
