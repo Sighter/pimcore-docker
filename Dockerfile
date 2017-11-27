@@ -7,9 +7,6 @@ ENV APACHE_DOCUMENT_ROOT /pimcore-install/web
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# RUN docker-php-ext-install mysqli
-# RUN pecl install intl \
-#     && docker-php-ext-enable intl
 COPY pimcore-install /pimcore-install
 COPY pimcore-install-substitutions/ /pimcore-install-substitutions/
 COPY pimcore-install-substitutions/composer.json /pimcore-install/composer.json
@@ -33,7 +30,5 @@ CMD cd /pimcore-install \
   "cp /pimcore-install-substitutions/app/AppKernel.php /pimcore-install/app/AppKernel.php \
    && cp /pimcore-install-substitutions/app/config/config.yml /pimcore-install/app/config/config.yml" \
   && php bin/console coreshop:install \
-  #&& bin/console assets:install --symlink \
-  # && su www-data -s /bin/bash -c \
   && apache2-foreground
 
